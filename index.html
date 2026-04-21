@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Explorer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ── Title Bar ─────────────────────────────────────────── -->
+  <div class="title-bar" id="titleBar">
+    <span class="title-icon">🗂️</span>
+    <span class="title-text" id="windowTitle">File Explorer</span>
+    <div class="wc">
+      <button class="wc-btn wc-min" title="Minimize">&#8722;</button>
+      <button class="wc-btn wc-max" title="Maximize">&#9633;</button>
+      <button class="wc-btn wc-close" title="Close">&#10005;</button>
+    </div>
+  </div>
+
+  <!-- ── Navigation Toolbar ────────────────────────────────── -->
+  <div class="toolbar">
+    <div class="nav-btns">
+      <button class="nav-btn" id="btnBack"    title="Back">&#8592;</button>
+      <button class="nav-btn" id="btnForward" title="Forward">&#8594;</button>
+      <button class="nav-btn" id="btnUp"      title="Up">&#8593;</button>
+    </div>
+    <div class="addr-wrap">
+      <span class="addr-folder-icon">📁</span>
+      <div class="addr-bar" id="addrBar"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search…" />
+      <span class="search-icon">🔍</span>
+    </div>
+  </div>
+
+  <!-- ── Action Bar ─────────────────────────────────────────── -->
+  <div class="action-bar">
+    <button class="act-btn" id="btnNewFolder">
+      <span>📁</span> New Folder
+    </button>
+    <button class="act-btn" id="btnUpload">
+      <span>⬆</span> Upload
+    </button>
+    <input type="file" id="fileInput" multiple style="display:none" />
+    <div class="act-sep"></div>
+    <span class="act-label">View:</span>
+    <button class="view-tog active" id="btnDetails" title="Details">☰</button>
+    <button class="view-tog"        id="btnThumbs"  title="Thumbnails">⊞</button>
+  </div>
+
+  <!-- ── Main Area ──────────────────────────────────────────── -->
+  <div class="main-area">
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sb-section-hdr">📍 Quick access</div>
+      <div id="sidebarTree"></div>
+      <div class="sb-section-hdr" style="margin-top:8px">💻 This PC</div>
+      <div id="sidebarThisPC"></div>
+    </div>
+
+    <div class="sidebar-resizer" id="sbResizer"></div>
+
+    <!-- Content panel -->
+    <div class="content-panel" id="contentPanel">
+
+      <!-- Drop overlay -->
+      <div class="drop-overlay" id="dropOverlay">
+        <div class="drop-overlay-inner">
+          <div style="font-size:64px">⬆</div>
+          <div>Drop files here to upload</div>
+        </div>
+      </div>
+
+      <!-- File list -->
+      <div class="file-list" id="fileList" tabindex="0">
+        <!-- items rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Status Bar ─────────────────────────────────────────── -->
+  <div class="status-bar" id="statusBar">Ready</div>
+
+</div><!-- #app -->
+
+<!-- ── Context Menu ───────────────────────────────────────── -->
+<div class="ctx-menu" id="ctxMenu">
+  <div class="ctx-item" data-action="open">Open</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" data-action="cut">Cut</div>
+  <div class="ctx-item" data-action="copy">Copy</div>
+  <div class="ctx-item" data-action="paste">Paste</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" data-action="rename">Rename</div>
+  <div class="ctx-item ctx-danger" data-action="delete">Delete</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" data-action="new-folder">New Folder</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" data-action="properties">Properties</div>
+</div>
+
+<!-- ── Properties Modal ──────────────────────────────────── -->
+<div class="modal-backdrop" id="propsBackdrop">
+  <div class="modal" id="propsModal">
+    <div class="modal-hdr">
+      <h3 id="propsTitleText">Properties</h3>
+      <button class="modal-close" id="propsClose">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <div class="props-top">
+        <div class="props-icon-big" id="propsIconBig"></div>
+        <input class="props-name-inp" id="propsNameInp" type="text" />
+      </div>
+      <hr class="props-hr" />
+      <table class="props-tbl">
+        <tr><td>Type:</td>     <td id="propsType"></td></tr>
+        <tr><td>Location:</td><td id="propsLoc"></td></tr>
+        <tr><td>Size:</td>     <td id="propsSize"></td></tr>
+        <tr><td>Created:</td>  <td id="propsCreated"></td></tr>
+        <tr><td>Modified:</td> <td id="propsModified"></td></tr>
+      </table>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-primary" id="propsOK">OK</button>
+      <button class="btn" id="propsCancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
